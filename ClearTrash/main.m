@@ -11,13 +11,23 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
-        NSString *trashPath = @"/Users/johnson/.Trash/";
+        
+        
+        NSString *trashPath = [NSHomeDirectory() stringByAppendingString:@"/.Trash/"];
         NSError *error;
         NSArray *array = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:trashPath error:&error];
         
+        
         [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            //把 空格 ( ) 都添加 '\'
+            obj = [obj stringByReplacingOccurrencesOfString:@" " withString:@"\\ "];
+            obj = [obj stringByReplacingOccurrencesOfString:@"(" withString:@"\\("];
+            obj = [obj stringByReplacingOccurrencesOfString:@")" withString:@"\\)"];
+            
             NSString *string = [NSString stringWithFormat:@"rm -rf %@%@", trashPath, obj];
-            system([string UTF8String]);
+            int status = system([string UTF8String]);
+            printf("status %d \n", status);
         }];
         
         
