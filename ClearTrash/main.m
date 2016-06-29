@@ -127,16 +127,16 @@ int main(int argc, const char * argv[]) {
         
         
         
-//        //clear user trash
-//        NSString *userTrashPath = [NSHomeDirectory() stringByAppendingString:@"/.Trash/"];
-//        NSError *error;
-//        NSArray *arrayUserTrashFilesPath = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:userTrashPath error:&error];
-//        
-//        [arrayUserTrashFilesPath enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//            
-//            delFile(userTrashPath, obj);
-//            
-//        }];
+        //clear user trash
+        NSString *userTrashPath = [NSHomeDirectory() stringByAppendingString:@"/.Trash/"];
+        NSError *error;
+        NSArray *arrayUserTrashFilesPath = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:userTrashPath error:&error];
+        
+        [arrayUserTrashFilesPath enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            delFile(userTrashPath, obj);
+            
+        }];
         
         
         
@@ -149,12 +149,7 @@ int main(int argc, const char * argv[]) {
 //            
 //            NSString *folderPath = [[rootVolumes stringByAppendingPathComponent:obj] stringByAppendingString:@"/.Trashes"];
 //            [arraysVolumesPath replaceObjectAtIndex:idx withObject:folderPath];
-//            
-////            NSArray *arrayFilesPath = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:obj error:NULL];
-////            [arrayFilesPath enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-////                delFile(folderPath, obj);
-////            }];
-//            
+//
 //        }];
 //        
 //        removeFileWithElevatedPrivilegesFromVolumes(arraysVolumesPath);
@@ -166,20 +161,19 @@ int main(int argc, const char * argv[]) {
 //        system([xx UTF8String]);
         
         
-        
-//        /Users/johnson/.Trash/dumpdecrypted 2.dylib
-        
         [arraysVolumesPath enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             
             NSString *folderPath = [[rootVolumes stringByAppendingPathComponent:obj] stringByAppendingString:@"/.Trashes"];
             
             NSError *err;
-            NSArray *arrayFilesPath = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:@"/Users/johnson/.Trash/" error:&err];
+            NSArray *arrayFilesPath = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:&err];
             if (err) {
-                
+                NSLog(@"Error: %@, Path: %@", err, folderPath);
             }
-
             
+            [arrayFilesPath enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                delFile(folderPath, obj);
+            }];
             
         }];
     
