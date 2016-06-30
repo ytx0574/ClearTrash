@@ -13,13 +13,14 @@
 
 void delFile(NSString *folderPath, NSString *fileFullName) {
     
-    //把 空格 ( ) 都添加 '\'
+    //把 空格 ( ) ' 都添加 '\'
     
     NSString *filePath = [folderPath stringByAppendingPathComponent:fileFullName];
     
     filePath = [filePath stringByReplacingOccurrencesOfString:@" " withString:@"\\ "];
     filePath = [filePath stringByReplacingOccurrencesOfString:@"(" withString:@"\\("];
     filePath = [filePath stringByReplacingOccurrencesOfString:@")" withString:@"\\)"];
+    filePath = [filePath stringByReplacingOccurrencesOfString:@"'" withString:@"\\'"];
     
     NSString *string = [NSString stringWithFormat:@"rm -rf %@", filePath];
     int status = system([string UTF8String]);
