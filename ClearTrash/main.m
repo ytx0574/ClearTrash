@@ -27,6 +27,7 @@ void delFile(NSString *folderPath, NSString *fileFullName) {
     
 }
 
+//Mac系统弹框输入管理员密码清理
 void removeFileWithElevatedPrivilegesFromVolumes(NSArray *volumesTrashes)
 
 {
@@ -118,8 +119,26 @@ void removeFileWithElevatedPrivilegesFromVolumes(NSArray *volumesTrashes)
     
     status = AuthorizationFree(authorizationRef, kAuthorizationFlagDestroyRights);
 
-    
 }
+
+
+NSFileManager * fileManager()
+{
+    return [NSFileManager defaultManager];
+}
+
+BOOL isSystemDisk(NSString *volumesPath)
+{
+    NSDictionary *attributes = [[fileManager() enumeratorAtPath:volumesPath] directoryAttributes];
+    return [attributes[NSFileOwnerAccountName] isEqualToString:@"root"]
+    &&
+    [attributes[NSFileOwnerAccountID] integerValue] == 0
+    &&
+    [attributes[NSFileGroupOwnerAccountName] isEqualToString:@"wheel"]
+    &&
+    [attributes[NSFileGroupOwnerAccountID] integerValue] == 0;
+}
+
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -127,64 +146,60 @@ int main(int argc, const char * argv[]) {
         
         
         
-//        //clear user trash
-//        NSString *userTrashPath = [NSHomeDirectory() stringByAppendingString:@"/.Trash/"];
-//        NSError *error;
-//        NSArray *arrayUserTrashFilesPath = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:userTrashPath error:&error];
-//        
-//        [arrayUserTrashFilesPath enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//            
-//            delFile(userTrashPath, obj);
-//            
-//        }];
+        //clear user trash
+        NSString *userTrashPath = [NSHomeDirectory() stringByAppendingString:@"/.Trash/"];
+        NSError *error;
+        NSArray *arrayUserTrashFilesPath = [fileManager() contentsOfDirectoryAtPath:userTrashPath error:&error];
+        
+        [arrayUserTrashFilesPath enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            
+            delFile(userTrashPath, obj);
+            
+        }];
         
         
         
         //clear volumes trash
         NSString *rootVolumes = @"/Volumes";
-        NSMutableArray *arraysVolumesPath = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:rootVolumes error:NULL] mutableCopy];
+        NSMutableArray *arraysVolumesPath = [[fileManager() contentsOfDirectoryAtPath:rootVolumes error:NULL] mutableCopy];
         
         
+        [arraysVolumesPath enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            
+            NSString *volumesPath = [rootVolumes stringByAppendingPathComponent:obj];
+            if (isSystemDisk(volumesPath)) {
+                return ;
+            }
+        
+            NSString *folderPath = [volumesPath stringByAppendingString:@"/.Trashes"];
+            if ([fileManager() fileExistsAtPath:folderPath]) {
+                //添加可读权限
+                system([[NSString stringWithFormat:@"chmod +r %@", folderPath] UTF8String]);
+                
+                NSError *err;
+                NSArray *arrayFilesPath = [fileManager() contentsOfDirectoryAtPath:folderPath error:&err];
+                if (err) {
+                    NSLog(@"Error: %@, Path: %@", err, folderPath);
+                }
+                
+                [arrayFilesPath enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    delFile(folderPath, obj);
+                }];
+            }
+            
+        }];
+    
+        
+//        //clear volumes trash with admin user password
 //        [arraysVolumesPath enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
 //            
 //            NSString *folderPath = [[rootVolumes stringByAppendingPathComponent:obj] stringByAppendingString:@"/.Trashes"];
 //            [arraysVolumesPath replaceObjectAtIndex:idx withObject:folderPath];
 //            
-////            NSArray *arrayFilesPath = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:obj error:NULL];
-////            [arrayFilesPath enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-////                delFile(folderPath, obj);
-////            }];
-//            
 //        }];
 //        
 //        removeFileWithElevatedPrivilegesFromVolumes(arraysVolumesPath);
-        
-        
-        
-        
-//        NSString *xx = @"rm -rf /Volumes/Others/.Trashes/501/dumpdecrypted.dylib";
-//        system([xx UTF8String]);
-        
-        
-        
-//        /Users/johnson/.Trash/dumpdecrypted 2.dylib
-        
-        [arraysVolumesPath enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            
-            NSString *folderPath = [[rootVolumes stringByAppendingPathComponent:obj] stringByAppendingString:@"/.Trashes"];
-            
-            NSError *err;
-            NSArray *arrayFilesPath = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:@"/Users/johnson/.Trash/" error:&err];
-            if (err) {
-                
-            }
 
-            
-            
-        }];
-    
-        
-        
     
     }
     return 0;
