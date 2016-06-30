@@ -24,7 +24,7 @@ void delFile(NSString *folderPath, NSString *fileFullName) {
     
     NSString *string = [NSString stringWithFormat:@"rm -rf %@", filePath];
     int status = system([string UTF8String]);
-    printf("status %d \n", status);
+    printf("excutable status %d \n", status);
     
 }
 
