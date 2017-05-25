@@ -1,5 +1,4 @@
 自制命令行工具
-
 ```
 @"Usage: jt [options] content \n"
 "\n"
