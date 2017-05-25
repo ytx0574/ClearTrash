@@ -8,10 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "CommandManager.h"
+#import "Header.h"
 
 @interface Command : NSObject
-
-+ (Class)commandClassFromOption:(NSString *)option;
 
 + (void)excuteWithOption:(NSString *)option content:(NSString *)content;
 

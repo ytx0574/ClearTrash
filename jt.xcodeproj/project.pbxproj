@@ -13,6 +13,7 @@
 		2C50B6D21ECAA83700B7EF3C /* Command.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C50B6D11ECAA83700B7EF3C /* Command.m */; };
 		2C50B6D51ECAA84200B7EF3C /* CommandManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C50B6D41ECAA84200B7EF3C /* CommandManager.m */; };
 		2C50B6D81ECAA98500B7EF3C /* CommandLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C50B6D71ECAA98500B7EF3C /* CommandLink.m */; };
+		2CEEC03C1ED69F8400F9DB29 /* CommandFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CEEC03B1ED69F8400F9DB29 /* CommandFile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,8 +41,10 @@
 		2C50B6D41ECAA84200B7EF3C /* CommandManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandManager.m; sourceTree = "<group>"; };
 		2C50B6D61ECAA98500B7EF3C /* CommandLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandLink.h; sourceTree = "<group>"; };
 		2C50B6D71ECAA98500B7EF3C /* CommandLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandLink.m; sourceTree = "<group>"; };
-		2C50B6D91ECAA9C100B7EF3C /* Enum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Enum.h; sourceTree = "<group>"; };
+		2C50B6D91ECAA9C100B7EF3C /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 		2C6926831ECAF0F100419111 /* build.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build.sh; sourceTree = "<group>"; };
+		2CEEC03A1ED69F8400F9DB29 /* CommandFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandFile.h; sourceTree = "<group>"; };
+		2CEEC03B1ED69F8400F9DB29 /* CommandFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandFile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,13 +79,15 @@
 			children = (
 				2C50B6C51ECA86FC00B7EF3C /* main.m */,
 				2C6926831ECAF0F100419111 /* build.sh */,
-				2C50B6D91ECAA9C100B7EF3C /* Enum.h */,
+				2C50B6D91ECAA9C100B7EF3C /* Header.h */,
 				2C50B6D31ECAA84200B7EF3C /* CommandManager.h */,
 				2C50B6D41ECAA84200B7EF3C /* CommandManager.m */,
 				2C50B6D01ECAA83700B7EF3C /* Command.h */,
 				2C50B6D11ECAA83700B7EF3C /* Command.m */,
 				2C50B6D61ECAA98500B7EF3C /* CommandLink.h */,
 				2C50B6D71ECAA98500B7EF3C /* CommandLink.m */,
+				2CEEC03A1ED69F8400F9DB29 /* CommandFile.h */,
+				2CEEC03B1ED69F8400F9DB29 /* CommandFile.m */,
 				2C50B6CC1ECA8E6200B7EF3C /* CommandTools.h */,
 				2C50B6CD1ECA8E6200B7EF3C /* CommandTools.m */,
 				2C3D93221ECAFF7900E0970D /* Test.h */,
@@ -165,6 +170,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CEEC03C1ED69F8400F9DB29 /* CommandFile.m in Sources */,
 				2C50B6C61ECA86FC00B7EF3C /* main.m in Sources */,
 				2C50B6D51ECAA84200B7EF3C /* CommandManager.m in Sources */,
 				2C50B6D21ECAA83700B7EF3C /* Command.m in Sources */,

@@ -17,4 +17,9 @@ typedef NS_ENUM(NSInteger, CommandType) {
 };
 
 
+#define JTFileManager                        [NSFileManager defaultManager]
+
+
+
+
 #endif /* Enum_h */

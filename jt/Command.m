@@ -8,6 +8,7 @@
 
 #import "Command.h"
 #import "CommandLink.h"
+#import "CommandFile.h"
 
 extern NSString *kUsege;
 
@@ -17,21 +18,21 @@ extern NSString *kUsege;
 
 {
     if ([option hasPrefix:@"-help"] || [option isEqualToString:@"help"]) {
-        [CommandManager log:[NSString stringWithFormat:@"指令错误: %@", kUsege]];
+        [CommandManager log:[NSString stringWithFormat:@"%@", kUsege]];
     }
     
-    if ([option hasPrefix:@"-link"] || [option hasPrefix:@"-l"]) {
+    else if ([option hasPrefix:@"-link"] || [option hasPrefix:@"-l"]) {
         
         [[CommandLink class]  excuteWithOption:option content:content];
     }
     
-    else if ([option isEqualToString:@"-link-d"] || [option isEqualToString:@"-l-d"]) {
+    else if ([option isEqualToString:@"-file"] || [option hasPrefix:@"-f"]) {
         
-        [[CommandLink class]  excuteWithOption:option content:content];
+        [[CommandFile class]  excuteWithOption:option content:content];
     }
     
     else {
-        [CommandManager log:@"option 传入错误, 请看说明"];
+        [CommandManager log:[NSString stringWithFormat:@"option 传入错误 \n%@", kUsege]];
     }
 }
 
