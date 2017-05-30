@@ -9,5 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface CommandTools : NSObject
-+ (void)excuteCommandLine:(NSString *)commandPath arguments:(NSArray *)arguments;
+
++ (BOOL)excuteCommandLine:(NSString *)commandPath arguments:(NSArray *)arguments;
+
 @end
